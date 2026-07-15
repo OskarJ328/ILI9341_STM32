@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "fonts.h"
+#include "images.h"
 #include "my_delay.h"
 #include "spi.h"
 #include "gpio.h"
@@ -110,12 +111,19 @@ int main(void)
   MX_GPIO_Init();
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
-  ILI9341_init(&ili);
-  myDelay(2000);
-  ILI9341_invertAxis(&ili, invertBoth);
-  ILI9341_swapAxes(&ili);
-  char Text[] = "Twoj Stary\nLezy Najebany\nNa Wersalce";
 
+  uint16_t TS_x = 20;
+  uint16_t JK_x = 20;
+  uint16_t SC_x = 20;
+  uint16_t TS_y = 10;
+  uint16_t JK_y = TS_y + TS60x60.Height + 10;
+  uint16_t SC_y = JK_y + JK60x68.Height + 10;
+  ILI9341_init(&ili);
+  myDelay(1000);
+  ILI9341_swapAxes(&ili);
+  ILI9341_invertAxis(&ili, invertBoth);
+  //char Text[] = "Twoj Stary\nLezy Najebany\nNa Wersalce";
+  ILI9341_fillScreen(&ili, ILI9341_WHITE);
   
   /* USER CODE END 2 */
 
@@ -123,12 +131,24 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    ILI9341_fillScreen(&ili, ILI9341_WHITE);
-    ILI9341_writeString(&ili, 100, 100, &font_16x26, Text, sizeof(Text), ILI9341_BLACK, ILI9341_WHITE);
-    for(uint8_t i = 0; i < 100; i++){
-      ILI9341_drawRectangle(&ili, 19 + i, 50, 1, HEART_HEIGHT, ILI9341_WHITE);
-      ILI9341_drawImage(&ili, 20 + i, 50, &heart16x16);
-      myDelay(5);
+    
+    for(uint16_t i = 0; i < 220; i++){
+      ILI9341_drawRectangle(&ili, TS_x + i - 1, TS_y, 1, TS60x60.Height, ILI9341_WHITE);
+      ILI9341_drawImage(&ili, TS_x + i, TS_y, &TS60x60);
+      ILI9341_drawRectangle(&ili, JK_x + i - 1, JK_y, 1, JK60x68.Height, ILI9341_WHITE);
+      ILI9341_drawImage(&ili, JK_x + i, JK_y, &JK60x68);
+      ILI9341_drawRectangle(&ili, SC_x + i - 1, SC_y, 1, susCat60x60.Height, ILI9341_WHITE);
+      ILI9341_drawImage(&ili, SC_x + i, SC_y, &susCat60x60);
+      myDelay(2);
+    }
+    for(uint16_t i = 220; i > 0; i--){
+      ILI9341_drawRectangle(&ili, TS_x + i + TS60x60.Width, TS_y, 1, TS60x60.Height, ILI9341_WHITE);
+      ILI9341_drawImage(&ili, TS_x + i, TS_y, &TS60x60);
+      ILI9341_drawRectangle(&ili, JK_x + i + JK60x68.Width, JK_y, 1, JK60x68.Height, ILI9341_WHITE);
+      ILI9341_drawImage(&ili, JK_x + i, JK_y, &JK60x68);
+      ILI9341_drawRectangle(&ili, SC_x + i + susCat60x60.Width,  SC_y, 1, susCat60x60.Height, ILI9341_WHITE);
+      ILI9341_drawImage(&ili, SC_x + i, SC_y, &susCat60x60);
+      myDelay(1);
     }
 
 

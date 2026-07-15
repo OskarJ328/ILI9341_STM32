@@ -237,10 +237,10 @@ void ILI9341_drawRectangle(ili9341_t *ili9341, uint16_t x, uint16_t y, uint16_t 
 }
 
 void ILI9341_drawImage(ili9341_t *ili9341, uint16_t x, uint16_t y, image_t *image){
-    if(x + image->Width >= ili9341->width || y + image->Height >= ili9341->height){
+    if(x + image->Width > ili9341->width || y + image->Height > ili9341->height){
         return;
     }
-    uint16_t *imageBuffer = image->Buffer;
+    const uint16_t *imageBuffer = image->Buffer;
     uint16_t pixelsToSend;
     uint8_t chunk[1024];
     uint32_t pixelsRemaining = image->Width * image->Height;

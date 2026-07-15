@@ -3,9 +3,16 @@
 
 
 typedef struct{
-    uint16_t        *Buffer;
-    const uint16_t   Width;
+    const uint16_t  *Buffer;
+    const uint16_t  Width;
     const uint16_t  Height;
 }image_t;
 
 extern image_t heart16x16;
+extern image_t susCat224x224;
+extern image_t JK220x250;
+extern image_t TS240x240;
+
+extern image_t susCat60x60;
+extern image_t JK60x68;
+extern image_t TS60x60;
