@@ -9,6 +9,7 @@ typedef struct {
     const uint8_t   height;
     const uint16_t  *data;
     const uint8_t   charSpacing;
+    const uint8_t   lineSpacing;
 }font_t;
 
 extern font_t font_7x10;

@@ -131,10 +131,8 @@ int main(void)
   myDelay(2000);
   ILI9341_invertAxis(&ili, invertBoth);
   ILI9341_swapAxes(&ili);
-  char twojStary[] = "Twoj Stary";
-  char lezyNajebany[] = "Lezy Najebany";
-  char naWersalce[] = "na Wersalce";
-  
+  char Text[] = "Twoj Stary\nLezy Najebany\nNa Wersalce";
+
   
   /* USER CODE END 2 */
 
@@ -143,9 +141,7 @@ int main(void)
   while (1)
   {
     ILI9341_fillScreen(&ili, ILI9341_WHITE);
-    ILI9341_writeString(&ili, 100, 100, &font_16x26, twojStary, sizeof(twojStary), ILI9341_BLACK, ILI9341_WHITE);
-    ILI9341_writeString(&ili, 100, 150, &font_11x18, lezyNajebany, sizeof(lezyNajebany), ILI9341_BLACK, ILI9341_WHITE);
-    ILI9341_writeString(&ili, 100, 200, &font_7x10, naWersalce, sizeof(naWersalce), ILI9341_BLACK, ILI9341_WHITE);
+    ILI9341_writeString(&ili, 100, 100, &font_16x26, Text, sizeof(Text), ILI9341_BLACK, ILI9341_WHITE);
     for(uint8_t i = 0; i < 100; i++){
       ILI9341_drawRectangle(&ili, 19 + i, 50, 1, HEART_HEIGHT, ILI9341_WHITE);
       ILI9341_drawImage(&ili, 20 + i, 50, heart16x16, HEART_WIDTH, HEART_HEIGHT);

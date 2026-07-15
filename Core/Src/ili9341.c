@@ -366,7 +366,7 @@ void ILI9341_writeChar(ili9341_t *ili9341, uint16_t x0, uint16_t y0, font_t *fon
     if(x0 + font->width >= ili9341->width || y0 + font->height >= ili9341->height){
         return;
     }
-    if(ch < 32 || ch > 126){
+    if((ch != 10 && ch < 32) || ch > 126){
         return;
     }
     
@@ -391,10 +391,16 @@ void ILI9341_writeChar(ili9341_t *ili9341, uint16_t x0, uint16_t y0, font_t *fon
 }
 
 void ILI9341_writeString(ili9341_t *ili9341, uint16_t x0, uint16_t y0, font_t *font, char *string, uint16_t stringSize, uint16_t color, uint16_t bgColor){
+    uint16_t x_pos = x0;
+    uint16_t y_pos = y0;
     for(uint16_t ch = 0; ch < stringSize; ch++){
-        if(x0 + (ch + 1) * font->width >= ili9341->width || y0 + font->height >= ili9341->height){
-            break;
+        if(string[ch] == '\n'){
+            y_pos += font->height + font->lineSpacing;
+            x_pos = x0;
         }
-        ILI9341_writeChar(ili9341, x0 + ch * (font->width + font->charSpacing), y0, font, string[ch], color, bgColor);
+        else{
+            ILI9341_writeChar(ili9341, x_pos, y_pos, font, string[ch], color, bgColor);
+            x_pos += font->width + font->charSpacing;
+        }
     }
 }
