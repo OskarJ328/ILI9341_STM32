@@ -1,4 +1,5 @@
 #include "ili9341.h"
+#include "images.h"
 #include "my_delay.h"
 #include "stm32l4xx_hal_def.h"
 #include "stm32l4xx_hal_gpio.h"
@@ -235,19 +236,16 @@ void ILI9341_drawRectangle(ili9341_t *ili9341, uint16_t x, uint16_t y, uint16_t 
     ILI9341_unselect(ili9341);
 }
 
-void ILI9341_drawImage(ili9341_t *ili9341, uint16_t x, uint16_t y, const uint16_t *imageBuffer, uint16_t imageWidth, uint16_t imageHeight){
-    if(x >= ili9341->width || y >= ili9341->height){
+void ILI9341_drawImage(ili9341_t *ili9341, uint16_t x, uint16_t y, image_t *image){
+    if(x + image->Width >= ili9341->width || y + image->Height >= ili9341->height){
         return;
     }
-    if(x + imageWidth >= ili9341->width || y + imageHeight >= ili9341->height){
-        return;
-    }
-    
+    uint16_t *imageBuffer = image->Buffer;
     uint16_t pixelsToSend;
     uint8_t chunk[1024];
-    uint32_t pixelsRemaining = imageWidth * imageHeight;
+    uint32_t pixelsRemaining = image->Width * image->Height;
     ILI9341_select(ili9341);
-    ILI9341_setAddressWindow(ili9341, x, y, x + imageWidth - 1, y + imageHeight -1);
+    ILI9341_setAddressWindow(ili9341, x, y, x + image->Width - 1, y + image->Height -1);
     while(pixelsRemaining != 0){
         if(pixelsRemaining > sizeof(chunk) / 2){
             pixelsToSend = sizeof(chunk) / 2;

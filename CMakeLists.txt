@@ -36,7 +36,9 @@ add_executable(${CMAKE_PROJECT_NAME}
     Core/Src/my_delay.c
     Core/Src/ili9341.c
     Core/Src/fonts.c
-    Core/Inc/fonts.h)
+    Core/Inc/fonts.h
+    Core/Inc/images.h
+    Core/Src/images.c)
 
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)

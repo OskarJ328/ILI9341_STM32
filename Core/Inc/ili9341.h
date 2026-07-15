@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include "fonts.h"
+#include "images.h"
 
 #define	ILI9341_BLACK   0x0000
 #define	ILI9341_BLUE    0x001F
@@ -56,7 +57,7 @@ typedef struct {
 void ILI9341_init(ili9341_t *ili9341);
 void ILI9341_drawPixel(ili9341_t *ili9341, uint16_t x, uint16_t y, uint16_t color);
 void ILI9341_drawRectangle(ili9341_t *ili9341, uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t color);
-void ILI9341_drawImage(ili9341_t *ili9341, uint16_t x, uint16_t y, const uint16_t *imageBuffer, uint16_t imageWidth, uint16_t imageHeight);
+void ILI9341_drawImage(ili9341_t *ili9341, uint16_t x, uint16_t y, image_t *image);
 void ILI9341_fillScreen(ili9341_t *ili9341, uint16_t color);
 void ILI9341_setRotation(ili9341_t *ili9341, ili9341_rotation_t rotation);
 void ILI9341_invertAxis(ili9341_t *ili9341, axisToInvert_t axis);
