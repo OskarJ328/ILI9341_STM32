@@ -395,6 +395,6 @@ void ILI9341_writeString(ili9341_t *ili9341, uint16_t x0, uint16_t y0, font_t *f
         if(x0 + (ch + 1) * font->width >= ili9341->width || y0 + font->height >= ili9341->height){
             break;
         }
-        ILI9341_writeChar(ili9341, x0 + ch * font->width, y0, font, string[ch], color, bgColor);
+        ILI9341_writeChar(ili9341, x0 + ch * (font->width + font->charSpacing), y0, font, string[ch], color, bgColor);
     }
 }
