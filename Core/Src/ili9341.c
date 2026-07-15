@@ -272,9 +272,9 @@ void ILI9341_fillScreen(ili9341_t *ili9341, uint16_t color){
     ILI9341_drawRectangle(ili9341, 0, 0, ili9341->width, ili9341->height, color);
 }
 
-void ILI9341_inverseAxis(ili9341_t *ili9341, axisToInvert_t axis){
+void ILI9341_invertAxis(ili9341_t *ili9341, axisToInvert_t axis){
     switch (axis) {
-    case x:
+    case invertX:
         if(ili9341->areAxesSwapped){
             ili9341->y_isAxisInverted = !ili9341->y_isAxisInverted;
         }
@@ -283,7 +283,7 @@ void ILI9341_inverseAxis(ili9341_t *ili9341, axisToInvert_t axis){
         }
         
         break;
-    case y:
+    case invertY:
         if(ili9341->areAxesSwapped){
             ili9341->x_isAxisInverted = !ili9341->x_isAxisInverted;
         }
@@ -291,7 +291,7 @@ void ILI9341_inverseAxis(ili9341_t *ili9341, axisToInvert_t axis){
             ili9341->y_isAxisInverted = !ili9341->y_isAxisInverted;
         }
         break; 
-    case both:
+    case invertBoth:
         ili9341->x_isAxisInverted = !ili9341->x_isAxisInverted;
         ili9341->y_isAxisInverted = !ili9341->y_isAxisInverted;
         break;
@@ -360,4 +360,41 @@ void ILI9341_setRotation(ili9341_t *ili9341, ili9341_rotation_t rotation){
     ILI9341_writeCommand(ili9341, memoryAccessControl);
     ILI9341_writeData(ili9341, &data, sizeof(data));
     ILI9341_unselect(ili9341);
+}
+
+void ILI9341_writeChar(ili9341_t *ili9341, uint16_t x0, uint16_t y0, font_t *font, char ch, uint16_t color, uint16_t bgColor){
+    if(x0 + font->width >= ili9341->width || y0 + font->height >= ili9341->height){
+        return;
+    }
+    if(ch < 32 || ch > 126){
+        return;
+    }
+    
+    uint8_t data[font->width * 2];
+    ILI9341_select(ili9341);
+    ILI9341_setAddressWindow(ili9341, x0, y0, x0 + font->width - 1, y0 + font->height - 1);
+    for(uint16_t y = 0; y < font->height; y++){
+        uint32_t charRow = font->data[(ch - 32) * font->height + y]; 
+        for(uint16_t x = 0; x < font->width; x++){
+            if(1 << (16 - x) & charRow){
+                data[2 * x]     = MSB(color);
+                data[2 * x + 1] = LSB(color);
+            }
+            else{
+                data[2 * x]     = MSB(bgColor);
+                data[2 * x + 1] = LSB(bgColor);
+            }
+        }
+        ILI9341_writeData(ili9341, data, sizeof(data));
+    }
+    ILI9341_unselect(ili9341);
+}
+
+void ILI9341_writeString(ili9341_t *ili9341, uint16_t x0, uint16_t y0, font_t *font, char *string, uint16_t stringSize, uint16_t color, uint16_t bgColor){
+    for(uint16_t ch = 0; ch < stringSize; ch++){
+        if(x0 + (ch + 1) * font->width >= ili9341->width || y0 + font->height >= ili9341->height){
+            break;
+        }
+        ILI9341_writeChar(ili9341, x0 + ch * font->width, y0, font, string[ch], color, bgColor);
+    }
 }

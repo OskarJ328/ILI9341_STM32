@@ -4,6 +4,7 @@
 #include "spi.h"
 #include <stdbool.h>
 #include <stdint.h>
+#include "fonts.h"
 
 #define	ILI9341_BLACK   0x0000
 #define	ILI9341_BLUE    0x001F
@@ -30,9 +31,9 @@ typedef enum {
 }ili9341_colorFormat_t;
 
 typedef enum {
-    x,
-    y,
-    both
+    invertX,
+    invertY,
+    invertBoth
 }axisToInvert_t;
 
 typedef struct {
@@ -58,5 +59,7 @@ void ILI9341_drawRectangle(ili9341_t *ili9341, uint16_t x, uint16_t y, uint16_t 
 void ILI9341_drawImage(ili9341_t *ili9341, uint16_t x, uint16_t y, const uint16_t *imageBuffer, uint16_t imageWidth, uint16_t imageHeight);
 void ILI9341_fillScreen(ili9341_t *ili9341, uint16_t color);
 void ILI9341_setRotation(ili9341_t *ili9341, ili9341_rotation_t rotation);
-void ILI9341_inverseAxis(ili9341_t *ili9341, axisToInvert_t axis);
+void ILI9341_invertAxis(ili9341_t *ili9341, axisToInvert_t axis);
 void ILI9341_swapAxes(ili9341_t *ili9341);
+void ILI9341_writeChar(ili9341_t *ili9341, uint16_t x0, uint16_t y0, font_t *font, char ch, uint16_t color, uint16_t bgColor);
+void ILI9341_writeString(ili9341_t *ili9341, uint16_t x0, uint16_t y0, font_t *font, char *string, uint16_t stringSize, uint16_t color, uint16_t bgColor);

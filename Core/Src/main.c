@@ -128,7 +128,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   ILI9341_init(&ili);
   myDelay(2000);
-  ILI9341_inverseAxis(&ili, y);
+  ILI9341_invertAxis(&ili, invertY);
   //ILI9341_swapAxes(&ili);
   
   
