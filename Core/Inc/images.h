@@ -16,3 +16,6 @@ extern image_t TS240x240;
 extern image_t susCat60x60;
 extern image_t JK60x68;
 extern image_t TS60x60;
+extern image_t linuxKillsWindows299x187;
+extern image_t fredzia249x226;
+extern image_t kiciaFrania240x320;

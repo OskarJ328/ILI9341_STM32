@@ -120,17 +120,18 @@ int main(void)
   uint16_t SC_y = JK_y + JK60x68.Height + 10;
   ILI9341_init(&ili);
   myDelay(1000);
-  ILI9341_swapAxes(&ili);
+  //ILI9341_swapAxes(&ili);
   ILI9341_invertAxis(&ili, invertBoth);
   //char Text[] = "Twoj Stary\nLezy Najebany\nNa Wersalce";
   ILI9341_fillScreen(&ili, ILI9341_WHITE);
-  
+  ILI9341_drawImage(&ili, 0, 0, &kiciaFrania240x320);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    /*
     
     for(uint16_t i = 0; i < 220; i++){
       ILI9341_drawRectangle(&ili, TS_x + i - 1, TS_y, 1, TS60x60.Height, ILI9341_WHITE);
@@ -150,6 +151,7 @@ int main(void)
       ILI9341_drawImage(&ili, SC_x + i, SC_y, &susCat60x60);
       myDelay(1);
     }
+*/
 
 
     /* USER CODE END WHILE */
