@@ -63,4 +63,6 @@ void ILI9341_setRotation(ili9341_t *ili9341, ili9341_rotation_t rotation);
 void ILI9341_invertAxis(ili9341_t *ili9341, axisToInvert_t axis);
 void ILI9341_swapAxes(ili9341_t *ili9341);
 void ILI9341_writeChar(ili9341_t *ili9341, uint16_t x0, uint16_t y0, font_t *font, char ch, uint16_t color, uint16_t bgColor);
+void ILI9341_writeCharWithoutBackground(ili9341_t *ili9341, uint16_t x0, uint16_t y0, font_t *font, char ch, uint16_t color);
 void ILI9341_writeString(ili9341_t *ili9341, uint16_t x0, uint16_t y0, font_t *font, char *string, uint16_t stringSize, uint16_t color, uint16_t bgColor);
+void ILI9341_writeStringWithoutBackground(ili9341_t *ili9341, uint16_t x0, uint16_t y0, font_t *font, char *string, uint16_t stringSize, uint16_t color);
